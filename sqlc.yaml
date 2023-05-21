@@ -1,0 +1,13 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: 
+      - "./src/infra/gateway/clients/query.sql"
+      - "./src/infra/gateway/enterprise/query.sql"
+      - "./src/infra/gateway/categories/query.sql"
+      - "./src/infra/gateway/products/query.sql"
+    schema: "./src/infra/gateway/schema.sql"
+    gen:
+      go:
+        package: "gateway"
+        out: "./src/infra/gateway"

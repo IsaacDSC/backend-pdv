@@ -1,0 +1,28 @@
+###
+POST http://localhost:3333/enterprise
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+{
+    "corporateName": "corporateName",
+    "fantasyName": "enterpriseFake",
+    "logo": "logo.png",
+    "CPJ": "1233231321-0001",
+    "token": "d4198b5e-fac0-4a9a-b123-13d79f727879"
+}
+
+
+###
+PUT http://localhost:3333/enterprise
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+###
+DELETE http://localhost:3333/enterprise
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+###
+GET http://localhost:3333/enterprise
+Content-Type: application/json
+Authorization: Basic "abc:123"
