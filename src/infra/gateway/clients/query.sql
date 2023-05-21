@@ -10,6 +10,8 @@ WHERE telephone = $1;
 --
 -- name: CreateCLient :exec
 INSERT INTO "clients" (
+        "id",
+        "enterprise_id",
         "name",
         "email",
         "password",
@@ -22,7 +24,21 @@ INSERT INTO "clients" (
         observation,
         updated_at
     )
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, Now());
+VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6,
+        $7,
+        $8,
+        $9,
+        $10,
+        $11,
+        $12,
+        Now()
+    );
 --
 --
 --

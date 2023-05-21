@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "enterprise" (
-    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid(),
+    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "corporate_name" VARCHAR(100),
     "fantasy_name" VARCHAR(255),
     "logo" VARCHAR(255),
@@ -10,22 +10,24 @@ CREATE TABLE IF NOT EXISTS "enterprise" (
     "created_at" TIMESTAMPTZ DEFAULT Now()
 );
 CREATE TABLE IF NOT EXISTS "clients" (
-    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid(),
+    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "name" VARCHAR(100) NOT NULL,
     "email" VARCHAR(250) UNIQUE,
     "password" VARCHAR(255),
     "telephone" VARCHAR(20) NOT NULL UNIQUE,
-    "city" VARCHAR(100) NOT NULL,
+    "city" VARCHAR(100),
     "home_number" VARCHAR(250),
     "neighborhood" VARCHAR(100),
     "cep" VARCHAR(100),
-    "address" VARCHAR(20),
+    "address" TEXT,
     "observation" TEXT,
+    "enterprise_id" VARCHAR(100) NOT NULL,
+    CONSTRAINT fk_clients FOREIGN KEY(enterprise_id) REFERENCES "enterprise"(id),
     "updated_at" TIMESTAMPTZ,
     "created_at" TIMESTAMPTZ DEFAULT Now()
 );
 CREATE TABLE IF NOT EXISTS "categories" (
-    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid(),
+    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "name" VARCHAR(100) NOT NULL,
     "description" TEXT,
     "enterprise_id" VARCHAR(100),
@@ -33,7 +35,7 @@ CREATE TABLE IF NOT EXISTS "categories" (
     "created_at" TIMESTAMPTZ DEFAULT Now()
 );
 CREATE TABLE IF NOT EXISTS "products" (
-    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid(),
+    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "category_id" VARCHAR(100) REFERENCES categories(id) NOT NULL,
     "enterprise_id" VARCHAR(100) REFERENCES enterprise(id) NOT NULL,
     "name" VARCHAR(150) NOT NULL,
@@ -44,7 +46,7 @@ CREATE TABLE IF NOT EXISTS "products" (
     "created_at" TIMESTAMPTZ DEFAULT Now()
 );
 CREATE TABLE IF NOT EXISTS "orders" (
-    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid(),
+    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "total_price" REAL,
     "price_delivery" REAL,
     "price_items" REAL,
@@ -55,7 +57,7 @@ CREATE TABLE IF NOT EXISTS "orders" (
     "created_at" TIMESTAMPTZ DEFAULT Now()
 );
 CREATE TABLE IF NOT EXISTS "order_items" (
-    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid(),
+    "id" VARCHAR(100) PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "product_id" VARCHAR(100) REFERENCES products(id),
     "product_name" VARCHAR(255),
     "product_description" TEXT,

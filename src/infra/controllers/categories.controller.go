@@ -3,7 +3,8 @@ package controllers
 import (
 	"backend-pdv/lib"
 	"backend-pdv/src/app/helpers"
-	"backend-pdv/src/shared"
+	shared_instances "backend-pdv/src/shared/instances"
+	shared_types "backend-pdv/src/shared/types"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -25,14 +26,14 @@ func post_category(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	var body shared.CreateCategory_DTO
+	var body shared_types.CreateCategory_DTO
 	err = json.Unmarshal(data, &body)
 	if err != nil {
 		res.WriteHeader(http.StatusNotAcceptable)
 		return
 	}
-	service := shared.GetInstanceCategoryService(body)
-	list_errors := service.CreateCategory()
+	service := shared_instances.GetInstanceCategoryService(body)
+	client, list_errors := service.CreateCategory()
 	if len(list_errors) > 0 {
 		res.WriteHeader(http.StatusBadRequest)
 		output := helpers.BuildResponseListError(list_errors)
@@ -40,5 +41,7 @@ func post_category(res http.ResponseWriter, req *http.Request) {
 		res.Write(output_json)
 		return
 	}
-	res.WriteHeader(http.StatusAccepted)
+	output, _ := json.Marshal(client)
+	res.WriteHeader(http.StatusCreated)
+	res.Write(output)
 }

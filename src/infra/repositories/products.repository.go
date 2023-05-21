@@ -15,6 +15,7 @@ func (this_repository *ProductsRepository) CreateProduct(product domain.ProductE
 	defer conn.Close()
 	database := gateway.New(conn)
 	err = database.CreateProduct(ctx, gateway.CreateProductParams{
+		ID:           product.ID,
 		CategoryID:   product.CategoryId,
 		EnterpriseID: product.EnterpriseId,
 		Name:         product.Name,

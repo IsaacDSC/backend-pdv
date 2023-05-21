@@ -12,6 +12,8 @@ import (
 
 const createCLient = `-- name: CreateCLient :exec
 INSERT INTO "clients" (
+        "id",
+        "enterprise_id",
         "name",
         "email",
         "password",
@@ -24,16 +26,32 @@ INSERT INTO "clients" (
         observation,
         updated_at
     )
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, Now())
+VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6,
+        $7,
+        $8,
+        $9,
+        $10,
+        $11,
+        $12,
+        Now()
+    )
 `
 
 type CreateCLientParams struct {
+	ID           string
+	EnterpriseID string
 	Name         string
 	Email        sql.NullString
 	Password     sql.NullString
 	Telephone    string
 	HomeNumber   sql.NullString
-	City         string
+	City         sql.NullString
 	Neighborhood sql.NullString
 	Cep          sql.NullString
 	Address      sql.NullString
@@ -42,6 +60,8 @@ type CreateCLientParams struct {
 
 func (q *Queries) CreateCLient(ctx context.Context, arg CreateCLientParams) error {
 	_, err := q.db.ExecContext(ctx, createCLient,
+		arg.ID,
+		arg.EnterpriseID,
 		arg.Name,
 		arg.Email,
 		arg.Password,
@@ -58,22 +78,29 @@ func (q *Queries) CreateCLient(ctx context.Context, arg CreateCLientParams) erro
 
 const createCategory = `-- name: CreateCategory :exec
 INSERT INTO "categories" (
+        "id",
         "name",
         "description",
         "enterprise_id",
         "updated_at"
     )
-VALUES($1, $2, $3, Now())
+VALUES($1, $2, $3, $4, Now())
 `
 
 type CreateCategoryParams struct {
+	ID           string
 	Name         string
 	Description  sql.NullString
 	EnterpriseID sql.NullString
 }
 
 func (q *Queries) CreateCategory(ctx context.Context, arg CreateCategoryParams) error {
-	_, err := q.db.ExecContext(ctx, createCategory, arg.Name, arg.Description, arg.EnterpriseID)
+	_, err := q.db.ExecContext(ctx, createCategory,
+		arg.ID,
+		arg.Name,
+		arg.Description,
+		arg.EnterpriseID,
+	)
 	return err
 }
 
@@ -113,6 +140,7 @@ func (q *Queries) CreateEnterprise(ctx context.Context, arg CreateEnterprisePara
 
 const createProduct = `-- name: CreateProduct :exec
 INSERT INTO "products" (
+        "id",
         "category_id",
         "enterprise_id",
         "name",
@@ -121,10 +149,11 @@ INSERT INTO "products" (
         "price",
         "updated_at"
     )
-VALUES($1, $2, $3, $4, $5, $6, Now())
+VALUES($1, $2, $3, $4, $5, $6, $7, Now())
 `
 
 type CreateProductParams struct {
+	ID           string
 	CategoryID   string
 	EnterpriseID string
 	Name         string
@@ -135,6 +164,7 @@ type CreateProductParams struct {
 
 func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) error {
 	_, err := q.db.ExecContext(ctx, createProduct,
+		arg.ID,
 		arg.CategoryID,
 		arg.EnterpriseID,
 		arg.Name,
@@ -146,7 +176,7 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) er
 }
 
 const findClient = `-- name: FindClient :one
-SELECT id, name, email, password, telephone, city, home_number, neighborhood, cep, address, observation, updated_at, created_at
+SELECT id, name, email, password, telephone, city, home_number, neighborhood, cep, address, observation, enterprise_id, updated_at, created_at
 FROM "clients"
 WHERE telephone = $1
 `
@@ -166,6 +196,7 @@ func (q *Queries) FindClient(ctx context.Context, telephone string) (Client, err
 		&i.Cep,
 		&i.Address,
 		&i.Observation,
+		&i.EnterpriseID,
 		&i.UpdatedAt,
 		&i.CreatedAt,
 	)

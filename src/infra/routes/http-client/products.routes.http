@@ -1,0 +1,29 @@
+###
+POST http://localhost:3333/product
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+{
+    "enterpriseId": "8861d131-7274-466b-851e-414677e203e6",
+    "categoryId": "82d71c4a-838b-4d45-952d-36559fd1ba89",
+    "name": "productFake",
+    "description": "logn_descriptions",
+    "image":"image_product.png",
+    "price":88.99
+}
+
+
+###
+PUT http://localhost:3333/product
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+###
+DELETE http://localhost:3333/product
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+###
+GET http://localhost:3333/product
+Content-Type: application/json
+Authorization: Basic "abc:123"

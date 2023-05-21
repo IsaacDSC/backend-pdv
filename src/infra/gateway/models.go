@@ -23,12 +23,13 @@ type Client struct {
 	Email        sql.NullString
 	Password     sql.NullString
 	Telephone    string
-	City         string
+	City         sql.NullString
 	HomeNumber   sql.NullString
 	Neighborhood sql.NullString
 	Cep          sql.NullString
 	Address      sql.NullString
 	Observation  sql.NullString
+	EnterpriseID string
 	UpdatedAt    sql.NullTime
 	CreatedAt    sql.NullTime
 }

@@ -1,6 +1,10 @@
 package aggregate
 
 type Address struct {
-	City       string
-	HomeNumber int32
+	City         string
+	HomeNumber   string
+	Neighborhood string
+	Cep          string
+	Address      string
+	Observation  string
 }

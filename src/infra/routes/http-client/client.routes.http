@@ -1,0 +1,35 @@
+###
+POST http://localhost:3333/client
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+{
+    "enterpriseId": "87332675-50e8-4eea-a35a-e273e676dee4",
+    "name": "clientFake",
+    "email": "mailer@gmail.com",
+    "telephone":"24988180688",
+    "address":{
+        "city":"Barra Mansa",
+        "homeNumber":"200",
+        "neighborhood":"fadce808-d5f6-43ef-a68f-987f5d4c169e",
+        "cep":"9bbaee5e-74ae-41f3-b3da-e50d3ca61f53",
+        "address":"0aefe1e0-5e80-47fb-823b-9c9dd62530a7",
+        "observation":"3910f8f4-2979-4e61-8956-0ade6fba6fc8"
+    }
+}
+
+
+###
+PUT http://localhost:3333/client
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+###
+DELETE http://localhost:3333/client
+Content-Type: application/json
+Authorization: Basic "abc:123"
+
+###
+GET http://localhost:3333/client
+Content-Type: application/json
+Authorization: Basic "abc:123"
